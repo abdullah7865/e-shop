@@ -4,10 +4,10 @@
             <div class="col-xl-12 col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Add Product Photo</h4>
+                        <h4 class="card-title">Edit Product</h4>
                     </div>
                     <div class="card-body">
-                        <form wire:submit.prevent="save" method="post" class="dropzone" id="myAwesomeDropzone"
+                        <form wire:submit.prevent="update" method="post" class="dropzone" id="myAwesomeDropzone"
                             data-plugin="dropzone" data-previews-container="#file-previews"
                             data-upload-preview-template="#uploadPreviewTemplate">
                             <!-- File Input -->
@@ -221,7 +221,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <label for="product-tex" class="form-label">Tex</label>
+                                <label for="product-tex" class="form-label">Tax</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text fs-20"><i class='bx bxs-file-txt'></i></span>
                                     <input wire:model="tax" type="number" id="product-tex" class="form-control"
@@ -234,7 +234,7 @@
                 <div class="p-3 bg-light mb-3 rounded">
                     <div class="row justify-content-end g-2">
                         <div class="col-lg-2">
-                            <button type="submit" class="btn btn-outline-secondary w-100">Create Product</button>
+                            <button type="submit" class="btn btn-outline-secondary w-100">Update Product</button>
                         </div>
                     </div>
                 </div>
@@ -242,13 +242,4 @@
             </div>
         </div>
     </div>
-    <script>
-        window.addEventListener('swal', event => {
-            Swal.fire({
-                title: event.detail[0].title,
-                text: event.detail[0].text,
-                icon: event.detail[0].icon,
-            });
-        });
-    </script>
 </div>

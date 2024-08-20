@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/admin/product/add', 'admin.product.add-product')->name('product.add');
     Route::view('/admin/product/size', 'admin.product.size-product')->name('product.size');
     Route::view('/admin/product/color', 'admin.product.color-product')->name('product.color');
+    Route::view('/admin/product/edit/{id}', 'admin.product.edit-product')->name('product.edit');
 
 
 

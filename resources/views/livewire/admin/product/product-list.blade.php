@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center gap-1">
                         <h4 class="card-title flex-grow-1">All Product List</h4>
-                        <a href="product-add.html" class="btn btn-sm btn-primary">
+                        <a href="{{route ('product.add')}}" class="btn btn-sm btn-primary">
                             Add Product
                         </a>
                         <div class="dropdown">
@@ -28,12 +28,7 @@
                             <table class="table align-middle mb-0 table-hover table-centered">
                                 <thead class="bg-light-subtle">
                                     <tr>
-                                        <th style="width: 20px;">
-                                            <div class="form-check ms-1">
-                                                <input type="checkbox" class="form-check-input" id="customCheck1">
-                                                <label class="form-check-label" for="customCheck1"></label>
-                                            </div>
-                                        </th>
+
                                         <th>Product Name & Size</th>
                                         <th>Price</th>
                                         <th>Stock</th>
@@ -45,14 +40,7 @@
                                 <tbody>
                                     @foreach ($products as $product)
                                         <tr>
-                                            <td>
-                                                <div class="form-check ms-1">
-                                                    <input type="checkbox" class="form-check-input"
-                                                        id="customCheck{{ $product->id }}">
-                                                    <label class="form-check-label"
-                                                        for="customCheck{{ $product->id }}">&nbsp;</label>
-                                                </div>
-                                            </td>
+
                                             <td>
                                                 <div class="d-flex align-items-center gap-2">
                                                     <div
@@ -70,10 +58,14 @@
                                                         <a href="#!"
                                                             class="text-dark fw-medium fs-15">{{ $product->name }}</a>
                                                         <p class="text-muted mb-0 mt-1 fs-13">
+                                                            @php
+                                                            $sizeIds = json_decode($product->sizes);
+                                                            $sizes = \App\Models\Size::whereIn('id', $sizeIds)->pluck('size_label', 'id')->toArray();
+                                                        @endphp
                                                             <span>Size : </span>
-                                                            @foreach (json_decode($product->sizes) as $size)
-                                                                {{ $size }}{{ !$loop->last ? ', ' : '' }}
-                                                            @endforeach
+                                                            @foreach ($sizeIds as $sizeId)
+                                                            {{ $sizes[$sizeId] ?? 'Unknown' }}{{ !$loop->last ? ', ' : '' }}
+                                                        @endforeach
                                                         </p>
                                                     </div>
                                                 </div>
@@ -84,7 +76,7 @@
                                                         class="text-dark fw-medium">{{ $product->stock }} Item</span>
                                                     </p>
                                             </td>
-                                            <td>{{ $product->category->name }}</td>
+                                            <td>{{ $product->category->title }}</td>
                                             <td>
                                                 @if (isset($product->rating))
                                                     <span class="badge p-1 bg-light text-dark fs-12 me-1">
@@ -103,14 +95,14 @@
                                                         <iconify-icon icon="solar:eye-broken"
                                                             class="align-middle fs-18"></iconify-icon>
                                                     </a>
-                                                    <a href="#!" class="btn btn-soft-primary btn-sm">
+                                                    <a href="{{ route('product.edit', $product->id) }}" class="btn btn-soft-primary btn-sm">
                                                         <iconify-icon icon="solar:pen-2-broken"
                                                             class="align-middle fs-18"></iconify-icon>
                                                     </a>
-                                                    <a href="#!" class="btn btn-soft-danger btn-sm">
+                                                    <button onclick="confirmDeletion({{ $product->id }})" class="btn btn-soft-danger btn-sm">
                                                         <iconify-icon icon="solar:trash-bin-minimalistic-2-broken"
                                                             class="align-middle fs-18"></iconify-icon>
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -138,4 +130,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        window.addEventListener('swal', event => {
+
+            Swal.fire({
+                title: event.detail[0].title,
+                text: event.detail[0].text,
+                icon: event.detail[0].icon,
+            });
+        });
+
+
+        function confirmDeletion(productId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    @this.call('delete', productId);
+                }
+            });
+        }
+    </script>
 </div>

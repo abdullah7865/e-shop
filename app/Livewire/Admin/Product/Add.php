@@ -83,12 +83,12 @@ class Add extends Component
             'selectedColors' => 'array',
             'description' => 'nullable|string',
             'tag_number' => 'nullable|numeric',
-            'stock' => 'nullable|numeric',
+            'stock' => 'required|nullable|numeric',
             'tag' => 'array',
-            'price' => 'nullable|numeric',
+            'price' => 'required|nullable|numeric',
             'discount' => 'nullable|numeric',
             'tax' => 'nullable|numeric',
-            'image.*' => 'image|mimes:png,jpg,jpeg,gif|max:2048',
+            'image.*' => 'required|image|mimes:png,jpg,jpeg,gif|max:2048',
         ]);
 
 
