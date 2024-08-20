@@ -6,10 +6,11 @@ use Livewire\Component;
 use App\Models\Category;
 use Livewire\WithFileUploads;
 
-class Add extends Component
+class Edit extends Component
 {
     use WithFileUploads;
 
+    public $categoryId;
     public $title;
     public $createdBy;
     public $tagId;
@@ -19,6 +20,24 @@ class Add extends Component
     public $metaDescription;
     public $files = [];
     public $previews = [];
+    public $existingFiles = [];
+
+    public function mount()
+    {
+        $id = request()->route('id');
+        $category = Category::findOrFail($id);
+
+        $this->categoryId = $category->id;
+        $this->title = $category->title;
+        $this->createdBy = $category->created_by;
+        $this->tagId = $category->tag_id;
+        $this->description = $category->description;
+        $this->metaTitle = $category->meta_title;
+        $this->metaTag = $category->meta_tag;
+        $this->metaDescription = $category->meta_description;
+        $this->existingFiles = json_decode($category->files, true) ?? [];
+        $this->previews = array_map(fn($file) => asset('storage/uploads/' . $file), $this->existingFiles);
+    }
 
     public function updatedFiles()
     {
@@ -26,13 +45,12 @@ class Add extends Component
             'files.*' => 'image|max:1024',
         ]);
 
-        $this->previews = [];
         foreach ($this->files as $file) {
             $this->previews[] = $file->temporaryUrl();
         }
     }
 
-    public function save()
+    public function update()
     {
         $this->validate([
             'title' => 'required|string|max:255',
@@ -45,7 +63,7 @@ class Add extends Component
             'files.*' => 'image|max:1024',
         ]);
 
-        $fileNames = [];
+        $fileNames = $this->existingFiles;
 
         foreach ($this->files as $file) {
             $fileName = time() . '_' . $file->getClientOriginalName();
@@ -53,7 +71,8 @@ class Add extends Component
             $fileNames[] = $fileName;
         }
 
-        Category::create([
+        $category = Category::findOrFail($this->categoryId);
+        $category->update([
             'title' => $this->title,
             'created_by' => $this->createdBy,
             'tag_id' => $this->tagId,
@@ -66,16 +85,14 @@ class Add extends Component
 
         $this->dispatch('swal', [
             'title' => 'Success!',
-            'text' => 'Category added successfully.',
+            'text' => 'Category updated successfully.',
             'icon' => 'success',
         ]);
 
         return redirect()->route('category.list');
     }
-
     public function render()
     {
-        return view('livewire.admin.category.add');
+        return view('livewire.admin.category.edit');
     }
 }
-

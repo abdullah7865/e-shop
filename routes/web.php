@@ -9,6 +9,7 @@ Route::get('/admin/dashboard', function () {
 
 Route::view('/admin/category', 'admin.category.list-category')->name('category.list');
 Route::view('/admin/category/add', 'admin.category.add-category')->name('category.add');
+Route::view('/admin/category/edit/{id}', 'admin.category.edit-category')->name('category.edit');
 
 
 Route::get('/dashboard', function () {
