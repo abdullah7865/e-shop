@@ -9,17 +9,21 @@
                     <div class="card-body">
                         <!-- File Upload -->
                         <form wire:submit.prevent="save" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone"
-                            data-previews-container="#file-previews" data-upload-preview-template="#uploadPreviewTemplate">
+                            data-previews-container="#file-previews"
+                            data-upload-preview-template="#uploadPreviewTemplate">
 
                             <!-- Hidden File Input -->
-                            <input type="file" id="file-input" multiple wire:model="files" style="display:none;" accept="image/*" />
+                            <input type="file" id="file-input" multiple wire:model="files" style="display:none;"
+                                accept="image/*" />
 
                             <!-- Image Preview or Upload Message -->
                             <div class="dz-message needsclick" id="upload-zone"
                                 onclick="document.getElementById('file-input').click();">
                                 <i class="bx bx-cloud-upload fs-48 text-primary"></i>
-                                <h3 class="mt-4">Drop your images here, or <span class="text-primary">click to browse</span></h3>
-                                <span class="text-muted fs-13">1600 x 1200 (4:3) recommended. PNG, JPG and GIF files are allowed</span>
+                                <h3 class="mt-4">Drop your images here, or <span class="text-primary">click to
+                                        browse</span></h3>
+                                <span class="text-muted fs-13">1600 x 1200 (4:3) recommended. PNG, JPG and GIF files are
+                                    allowed</span>
                             </div>
 
                             <!-- Image Previews -->
@@ -27,12 +31,12 @@
                                 <div class="d-flex justify-content-start mt-4">
                                     @foreach ($previews as $preview)
                                         <div class="me-3">
-                                            <img src="{{ $preview }}" alt="Image Preview" class="img-fluid" style="max-width: 100px; height: auto;" />
+                                            <img src="{{ $preview }}" alt="Image Preview" class="img-fluid"
+                                                style="max-width: 100px; height: auto;" />
                                         </div>
                                     @endforeach
                                 </div>
                             @endif
-                        </form>
                     </div>
                 </div>
 

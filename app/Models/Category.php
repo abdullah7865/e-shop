@@ -27,4 +27,9 @@ class Category extends Model
     protected $casts = [
         'files' => 'array',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
