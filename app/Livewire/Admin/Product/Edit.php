@@ -32,6 +32,7 @@ class Edit extends Component
     public $categories;
     public $sizes;
     public $colors;
+    public $tag = [];
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -85,44 +86,61 @@ class Edit extends Component
 
     public function update()
     {
-        $this->validate();
+        $validatedData = $this->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|integer|exists:categories,id', // Ensure it's an integer
+            'brand' => 'nullable|string|max:255',
+            'weight' => 'nullable|numeric',
+            'gender' => 'nullable|in:Men,Women,Other',
+            'selectedSizes' => 'array',
+            'selectedColors' => 'array',
+            'description' => 'nullable|string',
+            'tag_number' => 'nullable|numeric',
+            'stock' => 'required|nullable|numeric',
+            'tag' => 'array',
+            'price' => 'required|nullable|numeric',
+            'discount' => 'nullable|numeric',
+            'tax' => 'nullable|numeric',
+            'image.*' => 'nullable|image|mimes:png,jpg,jpeg,gif|max:2048',
+        ]);
 
-        $product = Product::find($this->productId);
-
-        if ($product) {
-            $product->update([
-                'name' => $this->name,
-                'category_id' => $this->category_id,
-                'brand' => $this->brand,
-                'weight' => $this->weight,
-                'gender' => $this->gender,
-                'description' => $this->description,
-                'tag_number' => $this->tag_number,
-                'stock' => $this->stock,
-                'price' => $this->price,
-                'discount' => $this->discount,
-                'tax' => $this->tax,
-            ]);
-
-            $product->sizes()->sync($this->selectedSizes);
-            $product->colors()->sync($this->selectedColors);
-
-            if ($this->image) {
-                foreach ($this->image as $img) {
-                    $imagePath = $img->store('products', 'public');
-                    $product->images()->create(['path' => $imagePath]);
-                }
+        // Handle new images
+        $imagePaths = $this->existingImages;
+        if ($this->image) {
+            foreach ($this->image as $file) {
+                $imagePaths[] = $file->store('images', 'public');
             }
         }
 
+        // Update the product
+        $product = Product::findOrFail($this->productId);
+        $product->update([
+            'name' => $this->name,
+            'category_id' => (int) $this->category_id,
+            'brand' => $this->brand,
+            'weight' => $this->weight,
+            'gender' => $this->gender,
+            'sizes' => json_encode($this->selectedSizes),
+            'colors' => json_encode($this->selectedColors),
+            'description' => $this->description,
+            'tag_number' => $this->tag_number,
+            'stock' => $this->stock,
+            'tag' => json_encode($this->tag),
+            'price' => $this->price,
+            'discount' => $this->discount,
+            'tax' => $this->tax,
+            'images' => json_encode($imagePaths),
+        ]);
+
         $this->dispatch('swal', [
             'title' => 'Success!',
-            'text' => 'Category updated successfully.',
+            'text' => 'Product updated successfully.',
             'icon' => 'success',
         ]);
 
         return redirect()->route('product.list');
     }
+
 
     public function render()
     {

@@ -7,7 +7,7 @@
                         <h4 class="card-title">Add Product Photo</h4>
                     </div>
                     <div class="card-body">
-                        <form wire:submit.prevent="save" method="post" class="dropzone" id="myAwesomeDropzone"
+                        <form wire:submit.prevent="save" class="dropzone" id="myAwesomeDropzone"
                             data-plugin="dropzone" data-previews-container="#file-previews"
                             data-upload-preview-template="#uploadPreviewTemplate">
                             <!-- File Input -->

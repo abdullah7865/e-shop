@@ -4,10 +4,11 @@ namespace App\Livewire\Admin\Product;
 
 use App\Models\Size;
 use App\Models\Color;
+use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
-use App\Models\Product;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class Add extends Component
 {
