@@ -35,8 +35,8 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center gap-1">
                             <h4 class="card-title flex-grow-1">All Categories List</h4>
-                            <a href="product-add.html" class="btn btn-sm btn-primary">
-                                Add Product
+                            <a href="{{route ('category.add')}}" class="btn btn-sm btn-primary">
+                                Add Category
                             </a>
                             <div class="dropdown">
                                 <a href="#" class="dropdown-toggle btn btn-sm btn-outline-light"
@@ -98,10 +98,6 @@
                                                     <td></td>
                                                     <td>
                                                         <div class="d-flex gap-2">
-                                                            <a href="#!" class="btn btn-light btn-sm">
-                                                                <iconify-icon icon="solar:eye-broken"
-                                                                    class="align-middle fs-18"></iconify-icon>
-                                                            </a>
                                                             <a href="{{ route('category.edit', $allcategory->id) }}" class="btn btn-soft-primary btn-sm">
                                                                 <iconify-icon icon="solar:pen-2-broken"
                                                                     class="align-middle fs-18"></iconify-icon>

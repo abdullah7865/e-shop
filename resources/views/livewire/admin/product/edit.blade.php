@@ -7,7 +7,7 @@
                         <h4 class="card-title">Add Product Photo</h4>
                     </div>
                     <div class="card-body">
-                        <form wire:submit.prevent="update" class="dropzone" id="myAwesomeDropzone"
+                        <form wire:submit.prevent="updateProduct" class="dropzone" id="myAwesomeDropzone"
                             data-plugin="dropzone" data-previews-container="#file-previews"
                             data-upload-preview-template="#uploadPreviewTemplate">
                             <!-- File Input -->
@@ -234,7 +234,7 @@
                 <div class="p-3 bg-light mb-3 rounded">
                     <div class="row justify-content-end g-2">
                         <div class="col-lg-2">
-                            <button type="submit" class="btn btn-outline-secondary w-100">Create Product</button>
+                            <button type="submit" class="btn btn-outline-secondary w-100">update Product</button>
                         </div>
                     </div>
                 </div>
