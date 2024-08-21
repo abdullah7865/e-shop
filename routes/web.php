@@ -7,9 +7,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function(){
     return view('front.home');
 });
-Route::get('/shop', function(){
-    return view('front.shop');
-})->name('shop');
+
+Route::view('/shop', 'front.shop')->name('shop');
 
 Route::get('/customer/login', function(){
     return view('front.login');
