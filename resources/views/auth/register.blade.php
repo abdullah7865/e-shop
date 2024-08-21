@@ -8,11 +8,11 @@
     <meta name="description" content="A fully responsive premium admin dashboard template" />
     <meta name="author" content="Techzaa" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="shortcut icon" href="{{asset('assets/images/favicon.ico')}}">
-    <link href="{{asset('assets/css/vendor.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
-    <script src="{{asset('assets/js/config.js')}}"></script>
+    <link rel="shortcut icon" href="{{asset('assets/admin/images/favicon.ico')}}">
+    <link href="{{asset('assets/admin/css/vendor.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/admin/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/admin/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{asset('assets/admin/js/config.js')}}"></script>
 </head>
 
 <body class="h-100">
@@ -25,10 +25,10 @@
                             <div class="d-flex flex-column h-100 justify-content-center">
                                 <div class="auth-logo mb-4">
                                     <a href="index.html" class="logo-dark">
-                                        <img src="{{asset('assets/images/logo-dark.png')}}" height="24" alt="logo dark">
+                                        <img src="{{asset('assets/admin/images/logo-dark.png')}}" height="24" alt="logo dark">
                                     </a>
                                     <a href="index.html" class="logo-light">
-                                        <img src="{{asset('assets/images/logo-light.png')}}" height="24" alt="logo light">
+                                        <img src="{{asset('assets/admin/images/logo-light.png')}}" height="24" alt="logo light">
                                     </a>
                                 </div>
                                 <h2 class="fw-bold fs-24">Sign Up</h2>
@@ -87,15 +87,15 @@
                 <div class="col-xxl-5 d-none d-xxl-flex">
                     <div class="card h-100 mb-0 overflow-hidden">
                         <div class="d-flex flex-column h-100">
-                            <img src="{{asset('assets/images/small/img-10.jpg')}}" alt="" class="w-100 h-100">
+                            <img src="{{asset('assets/admin/images/small/img-10.jpg')}}" alt="" class="w-100 h-100">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="{{asset('assets/js/vendor.js')}}"></script>
-    <script src="{{assets('assets/js/app.js')}}"></script>
+    <script src="{{asset('assets/admin/js/vendor.js')}}"></script>
+    <script src="{{asset('assets/admin/js/app.js')}}"></script>
 </body>
 
 </html>

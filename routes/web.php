@@ -5,8 +5,20 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function(){
-    return redirect()->route('admin.dashboard');
+    return view('front.home');
 });
+Route::get('/shop', function(){
+    return view('front.shop');
+})->name('shop');
+
+Route::get('/customer/login', function(){
+    return view('front.login');
+})->name('customer.login');
+
+Route::get('/customer/register', function(){
+    return view('front.register');
+})->name('customer.register');
+
 
 
 Route::middleware('auth')->group(function () {
