@@ -1,0 +1,54 @@
+    body {
+      background-color: #f0f2f5;
+      font-family: Arial, sans-serif;
+    }
+    .card-custom {
+      border-radius: 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-custom:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+    .card-header-custom {
+      background: linear-gradient(135deg, #FF6C2F 0%, #262D34 100%);
+      color: #ffffff;
+      padding: 1.25rem;
+      border-bottom: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    .card-body-custom {
+      text-align: center;
+      padding: 2rem;
+      background: #ffffff;
+    }
+    .card-icon {
+      font-size: 3rem;
+      color: #007bff;
+      margin-bottom: 1rem;
+    }
+    .card-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #333333;
+    }
+    .card-footer-custom {
+      background: #f8f9fa;
+      padding: 1rem;
+      text-align: center;
+      border-top: 1px solid #e9ecef;
+      font-size: 0.875rem;
+      color: #6c757d;
+    }
+    .card-footer-custom a {
+      color: #FF6C2F;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .card-footer-custom a:hover {
+      text-decoration: underline;
+    }

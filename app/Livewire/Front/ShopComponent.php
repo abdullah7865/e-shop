@@ -9,9 +9,20 @@ use Illuminate\Support\Facades\DB;
 class ShopComponent extends Component
 {
     public $products;
+    public $selectedProduct;
     public $count;
     public $sortBy = 'price_desc';
 
+    public function selectProduct($productId)
+{
+
+    $this->selectedProduct = Product::with('category')
+        ->select('products.*',
+            DB::raw('ROUND((discount / price) * 100) as discount_percentage'),
+            DB::raw('(price - discount) as final_price')
+        )
+        ->findOrFail($productId);
+}
     public function mount()
     {
         $this->count = Product::count();

@@ -22,5 +22,7 @@
     <!-- Theme Config js (Require in all Page) -->
     <script src="{{asset('assets/admin/js/config.js')}}"></script>
 
+    <link rel="stylesheet" href="{{asset('assets/admin/css/custom.css')}}">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
