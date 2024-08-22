@@ -4,16 +4,11 @@ namespace App\Livewire\Admin\Product;
 
 use App\Models\Product;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ProductList extends Component
 {
-    public $products;
-    public function mount()
-    {
-        $this->products = Product::with('category')
-            ->orderBy('created_at', 'desc')
-            ->get();
-    }
+    use WithPagination;
 
     public function delete($id)
     {
@@ -26,13 +21,17 @@ class ProductList extends Component
             'icon' => 'success',
         ]);
 
-        $this->products = Product::with('category')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $this->resetPage();
     }
+
     public function render()
     {
+        $products = Product::with('category')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
-        return view('livewire.admin.product.product-list');
+        return view('livewire.admin.product.product-list', [
+            'products' => $products
+        ]);
     }
 }

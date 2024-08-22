@@ -2,20 +2,15 @@
 
 namespace App\Livewire\Admin\Category;
 
+use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
 
 class CategoryList extends Component
 {
-    public $categories;
-    public $allCategories;
-
-    public function mount()
-    {
-
-        $this->allCategories = Category::all();
-    }
+    use WithPagination;
 
     public function deleteCategory($categoryId)
     {
@@ -29,17 +24,28 @@ class CategoryList extends Component
                 }
             }
             $category->delete();
+
+            $this->resetPage();
+
             $this->dispatch('swal', [
                 'title' => 'Success!',
                 'text' => 'Your category has been deleted.',
                 'icon' => 'success',
             ]);
-
-            $this->allCategories = Category::all();
         }
     }
+
     public function render()
     {
-        return view('livewire.admin.category.category-list');
+        $categories = Category::paginate(10);
+        foreach ($categories as $category) {
+            $category->min_price = Product::where('category_id', $category->id)->min('price');
+            $category->total_stock = Product::where('category_id', $category->id)->sum('stock');
+
+        }
+
+        return view('livewire.admin.category.category-list', [
+            'categories' => $categories
+        ]);
     }
 }

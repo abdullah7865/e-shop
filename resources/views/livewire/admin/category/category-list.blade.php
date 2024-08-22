@@ -5,7 +5,7 @@
                 $counter = 0;
             @endphp
 
-            @foreach ($allCategories as $category)
+            @foreach ($categories as $category)
                 @if ($counter < 4)
                     <div class="col-md-6 col-xl-3">
                         <div class="card">
@@ -35,7 +35,7 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center gap-1">
                             <h4 class="card-title flex-grow-1">All Categories List</h4>
-                            <a href="{{route ('category.add')}}" class="btn btn-sm btn-primary">
+                            <a href="{{ route('category.add') }}" class="btn btn-sm btn-primary">
                                 Add Category
                             </a>
                             <div class="dropdown">
@@ -67,17 +67,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if ($allCategories->isEmpty())
+                                        @if ($categories->isEmpty())
                                             <tr>
                                                 <td colspan="6" class="text-center">No categories found</td>
                                             </tr>
                                         @else
-                                            @foreach ($allCategories as $allcategory)
+                                            @foreach ($categories as $category)
                                                 <tr>
                                                     <td>
                                                         <div class="d-flex align-items-center gap-2">
                                                             @php
-                                                                $imageArray = json_decode($allcategory->files, true);
+                                                                $imageArray = json_decode($category->files, true);
                                                                 $imagePath = !empty($imageArray)
                                                                     ? $imageArray[0]
                                                                     : 'default.png';
@@ -88,22 +88,23 @@
                                                                     alt="" class="avatar-md">
                                                             </div>
                                                             <p class="text-dark fw-medium fs-15 mb-0">
-                                                                {{ $allcategory->title }}
+                                                                {{ $category->title }}
                                                             </p>
                                                         </div>
                                                     </td>
-                                                    <td></td>
-                                                    <td>{{ $allcategory->created_by }}</td>
-                                                    <td>{{ $allcategory->tag_id }}</td>
-                                                    <td></td>
+                                                    <td>${{ $category->min_price }}</td>
+                                                    <td>{{ $category->created_by }}</td>
+                                                    <td>{{ $category->tag_id }}</td>
+                                                    <td>{{ $category->total_stock }}</td>
                                                     <td>
                                                         <div class="d-flex gap-2">
-                                                            <a href="{{ route('category.edit', $allcategory->id) }}" class="btn btn-soft-primary btn-sm">
+                                                            <a href="{{ route('category.edit', $category->id) }}"
+                                                                class="btn btn-soft-primary btn-sm">
                                                                 <iconify-icon icon="solar:pen-2-broken"
                                                                     class="align-middle fs-18"></iconify-icon>
                                                             </a>
                                                             <button type="button" class="btn btn-soft-danger btn-sm"
-                                                                onclick="confirmDeletion({{ $allcategory->id }})">
+                                                                onclick="confirmDeletion({{ $category->id }})">
                                                                 <iconify-icon
                                                                     icon="solar:trash-bin-minimalistic-2-broken"
                                                                     class="align-middle fs-18"></iconify-icon>
@@ -121,14 +122,28 @@
                         <div class="card-footer border-top">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-end mb-0">
-                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a>
-                                    </li>
+                                    @if ($categories->onFirstPage())
+                                        <li class="page-item disabled"><a class="page-link"
+                                                href="javascript:void(0);">Previous</a></li>
+                                    @else
+                                        <li class="page-item"><a class="page-link"
+                                                href="{{ $categories->previousPageUrl() }}">Previous</a></li>
+                                    @endif
+
+                                    @for ($page = 1; $page <= $categories->lastPage(); $page++)
+                                        <li
+                                            class="page-item {{ $categories->currentPage() == $page ? 'active' : '' }}">
+                                            <a class="page-link"
+                                                href="{{ $categories->url($page) }}">{{ $page }}</a>
+                                        </li>
+                                    @endfor
+                                    @if ($categories->hasMorePages())
+                                        <li class="page-item"><a class="page-link"
+                                                href="{{ $categories->nextPageUrl() }}">Next</a></li>
+                                    @else
+                                        <li class="page-item disabled"><a class="page-link"
+                                                href="javascript:void(0);">Next</a></li>
+                                    @endif
                                 </ul>
                             </nav>
                         </div>
@@ -136,29 +151,30 @@
                 </div>
             </div>
         </div>
-        <script>
-            window.addEventListener('swal', event => {
-                Swal.fire({
-                    title: event.detail[0].title,
-                    text: event.detail[0].text,
-                    icon: event.detail[0].icon,
-                });
-            });
-
-            function confirmDeletion(categoryId) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        @this.call('deleteCategory', categoryId);
-                    }
-                });
-            }
-        </script>
     </div>
+    <script>
+        window.addEventListener('swal', event => {
+            Swal.fire({
+                title: event.detail[0].title,
+                text: event.detail[0].text,
+                icon: event.detail[0].icon,
+            });
+        });
+
+        function confirmDeletion(categoryId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    @this.call('deleteCategory', categoryId);
+                }
+            });
+        }
+    </script>
+</div>

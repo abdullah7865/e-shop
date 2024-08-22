@@ -150,13 +150,30 @@
                     <div class="card-footer border-top">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-end mb-0">
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                                {{-- Previous Page Link --}}
+                                @if($products->onFirstPage())
+                                    <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">Previous</a></li>
+                                @else
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $products->previousPageUrl() }}">Previous</a>
+                                    </li>
+                                @endif
+
+                                {{-- Pagination Links --}}
+                                @for($page = 1; $page <= $products->lastPage(); $page++)
+                                    <li class="page-item {{ $products->currentPage() == $page ? 'active' : '' }}">
+                                        <a class="page-link" href="{{ $products->url($page) }}">{{ $page }}</a>
+                                    </li>
+                                @endfor
+
+                                {{-- Next Page Link --}}
+                                @if($products->hasMorePages())
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $products->nextPageUrl() }}">Next</a>
+                                    </li>
+                                @else
+                                    <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                                @endif
                             </ul>
                         </nav>
                     </div>
