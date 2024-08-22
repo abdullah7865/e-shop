@@ -106,9 +106,8 @@
                         <div class="row mb-4">
                             <div class="col-lg-4">
                                 <div class="mt-3">
-                                    <h5 class="text-dark fw-medium">Size :</h5>
-                                    <div class="d-flex flex-wrap gap-2" role="group"
-                                        aria-label="Basic checkbox toggle button group">
+                                    <h5 class="text-dark fw-medium">Size:</h5>
+                                    <div class="d-flex flex-wrap gap-2" role="group" aria-label="Size selection">
                                         @foreach ($sizes as $size)
                                             <input type="checkbox" multiple wire:model="selectedSizes"
                                                 value="{{ $size->id }}"
@@ -126,24 +125,23 @@
 
                             <div class="col-lg-4">
                                 <div class="mt-3">
-                                    <h5 class="text-dark fw-medium">number :</h5>
-                                    <div class="d-flex flex-wrap gap-2" role="group"
-                                        aria-label="Basic checkbox toggle button group">
-                                        @foreach ($sizes as $size)
-                                            <input type="checkbox" multiple wire:model="selectedSizes"
-                                                value="{{ $size->id }}"
-                                                class="btn-check @error('selectedSizes') is-invalid @enderror"
-                                                id="size-{{ $size->id }}">
+                                    <h5 class="text-dark fw-medium">Number:</h5>
+                                    <div class="d-flex flex-wrap gap-2" role="group" aria-label="Number selection">
+                                        @foreach ($numbers as $number)
+                                            <input type="checkbox" multiple wire:model="selectedNumbers"
+                                                value="{{ $number->id }}"
+                                                class="btn-check @error('selectedNumbers') is-invalid @enderror"
+                                                id="number-{{ $number->id }}">
                                             <label
                                                 class="btn btn-light avatar-sm rounded d-flex justify-content-center align-items-center"
-                                                for="size-{{ $size->id }}">
-                                                {{ $size->size_label }}
+                                                for="number-{{ $number->id }}">
+                                                {{ $number->number }}
                                             </label>
                                         @endforeach
                                     </div>
-
                                 </div>
                             </div>
+
                             <div class="col-lg-4">
                                 <div class="mt-3">
                                     <h5 class="text-dark fw-medium">Colors :</h5>
@@ -230,6 +228,13 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                @if ($errors->has('discount_and_tax'))
+                                    <div class="col-12 mb-3">
+                                        <div class="alert alert-danger">
+                                            {{ $errors->first('discount_and_tax') }}
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="col-lg-4">
@@ -238,6 +243,9 @@
                                     <span class="input-group-text fs-20"><i class='bx bxs-discount'></i></span>
                                     <input wire:model="discount" type="number" id="product-discount"
                                         class="form-control" placeholder="000">
+                                        @error('discount')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -246,6 +254,9 @@
                                     <span class="input-group-text fs-20"><i class='bx bxs-file-txt'></i></span>
                                     <input wire:model="tax" type="number" id="product-tex" class="form-control"
                                         placeholder="000">
+                                        @error('tax')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -262,6 +273,7 @@
             </div>
         </div>
     </div>
+
     <script>
         window.addEventListener('swal', event => {
             Swal.fire({

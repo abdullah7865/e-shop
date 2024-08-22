@@ -18,6 +18,7 @@ class Product extends Model
         'weight',
         'gender',
         'sizes',
+        'numbers',
         'colors',
         'description',
         'tag_number',
@@ -31,13 +32,11 @@ class Product extends Model
 
     protected $casts = [
         'sizes' => 'array',
+        'numbers' => 'array',
         'colors' => 'array',
         'tag' => 'array',
         'images' => 'array',
         'price' => 'decimal:2',
-        'discount' => 'decimal:2',
-        'tax' => 'decimal:2',
-        'weight' => 'decimal:2',
     ];
 
     public function category()

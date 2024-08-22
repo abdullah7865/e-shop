@@ -10,7 +10,9 @@ class ProductList extends Component
     public $products;
     public function mount()
     {
-        $this->products = Product::with('category')->get();
+        $this->products = Product::with('category')
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
     public function delete($id)
@@ -24,7 +26,9 @@ class ProductList extends Component
             'icon' => 'success',
         ]);
 
-        $this->products = Product::with('category')->get();
+        $this->products = Product::with('category')
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
     public function render()
     {

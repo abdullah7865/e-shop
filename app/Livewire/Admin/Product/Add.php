@@ -7,6 +7,7 @@ use App\Models\Color;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\Number;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,6 +17,7 @@ class Add extends Component
 
     public $categories;
     public $sizes;
+    public $numbers;
     public $colors = [];
     public $selectedColors = [];
     public $previews = [];
@@ -26,6 +28,7 @@ class Add extends Component
     public $weight;
     public $gender;
     public $selectedSizes = [];
+    public $selectedNumbers = [];
     public $description;
     public $tag_number;
     public $stock;
@@ -58,6 +61,7 @@ class Add extends Component
 
         $this->categories = Category::all();
         $this->sizes = Size::all();
+        $this->numbers = Number::all();
     }
 
     public function updatedimage()
@@ -81,16 +85,38 @@ class Add extends Component
             'weight' => 'nullable|numeric',
             'gender' => 'nullable|in:Men,Women,Other',
             'selectedSizes' => 'array',
+            'selectedNumbers' => 'array',
             'selectedColors' => 'array',
             'description' => 'nullable|string',
             'tag_number' => 'nullable|numeric',
             'stock' => 'required|nullable|numeric',
             'tag' => 'array',
             'price' => 'required|nullable|numeric',
-            'discount' => 'nullable|numeric',
-            'tax' => 'nullable|numeric',
+            'discount' => 'required|numeric',
+            'tax' => 'required|numeric',
             'image.*' => 'required|image|mimes:png,jpg,jpeg,gif|max:2048',
         ]);
+
+        $errors = [];
+
+        if ($this->discount > $this->price) {
+            $errors['discount'] = 'Discount cannot be greater than the price.';
+        }
+
+        if ($this->tax > $this->price) {
+            $errors['tax'] = 'Tax cannot be greater than the price.';
+        }
+
+        if (($this->discount + $this->tax) > $this->price) {
+            $errors['discount_and_tax'] = 'The discount and tax cannot be greater than the price.';
+        }
+
+        if (!empty($errors)) {
+            foreach ($errors as $key => $error) {
+                $this->addError($key, $error);
+            }
+            return;
+        }
 
 
         $imagePaths = [];
@@ -108,6 +134,7 @@ class Add extends Component
             'weight' => $this->weight,
             'gender' => $this->gender,
             'sizes' => json_encode($this->selectedSizes),
+            'numbers' => json_encode($this->selectedNumbers),
             'colors' => json_encode($this->selectedColors),
             'description' => $this->description,
             'tag_number' => $this->tag_number,

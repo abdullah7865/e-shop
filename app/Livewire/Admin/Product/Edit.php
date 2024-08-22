@@ -7,6 +7,7 @@ use App\Models\Color;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\Number;
 use Livewire\WithFileUploads;
 
 class Edit extends Component
@@ -16,8 +17,10 @@ class Edit extends Component
     public $product;
     public $categories;
     public $sizes;
+    public $numbers;
     public $colors = [];
     public $selectedColors = [];
+    public $selectedNumbers = [];
     public $previews = [];
     public $image = [];
     public $name;
@@ -55,6 +58,7 @@ class Edit extends Component
         $this->weight = $this->product->weight;
         $this->gender = $this->product->gender;
         $this->selectedSizes = json_decode($this->product->sizes, true);
+        $this->selectedNumbers = json_decode($this->product->numbers, true);
         $this->selectedColors = json_decode($this->product->colors, true);
         $this->description = $this->product->description;
         $this->tag_number = $this->product->tag_number;
@@ -66,6 +70,7 @@ class Edit extends Component
 
         $this->categories = Category::all();
         $this->sizes = Size::all();
+        $this->numbers = Number::all();
         $this->colors = array_map(function ($color) {
             return [
                 'color_name' => $color,
@@ -99,16 +104,38 @@ class Edit extends Component
             'weight' => 'nullable|numeric',
             'gender' => 'nullable|in:Men,Women,Other',
             'selectedSizes' => 'array',
+            'selectedNumbers' => 'array',
             'selectedColors' => 'array',
             'description' => 'nullable|string',
             'tag_number' => 'nullable|numeric',
             'stock' => 'required|numeric',
             'tag' => 'array',
             'price' => 'required|numeric',
-            'discount' => 'nullable|numeric',
-            'tax' => 'nullable|numeric',
+            'discount' => 'required|numeric',
+            'tax' => 'required|numeric',
             'image.*' => 'image|mimes:png,jpg,jpeg,gif|max:2048',
         ]);
+
+        $errors = [];
+
+        if ($this->discount > $this->price) {
+            $errors['discount'] = 'Discount cannot be greater than the price.';
+        }
+
+        if ($this->tax > $this->price) {
+            $errors['tax'] = 'Tax cannot be greater than the price.';
+        }
+
+        if (($this->discount + $this->tax) > $this->price) {
+            $errors['discount_and_tax'] = 'The discount and tax cannot be greater than the price.';
+        }
+
+        if (!empty($errors)) {
+            foreach ($errors as $key => $error) {
+                $this->addError($key, $error);
+            }
+            return;
+        }
 
         $imagePaths = [];
         if ($this->image) {
@@ -125,6 +152,7 @@ class Edit extends Component
             'weight' => $this->weight,
             'gender' => $this->gender,
             'sizes' => json_encode($this->selectedSizes),
+            'numbers' => json_encode($this->selectedNumbers),
             'colors' => json_encode($this->selectedColors),
             'description' => $this->description,
             'tag_number' => $this->tag_number,

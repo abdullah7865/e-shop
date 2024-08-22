@@ -124,7 +124,25 @@
 
                                 </div>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-4">
+                                <div class="mt-3">
+                                    <h5 class="text-dark fw-medium">Number:</h5>
+                                    <div class="d-flex flex-wrap gap-2" role="group" aria-label="Number selection">
+                                        @foreach ($numbers as $number)
+                                            <input type="checkbox" multiple wire:model="selectedNumbers"
+                                                value="{{ $number->id }}"
+                                                class="btn-check @error('selectedNumbers') is-invalid @enderror"
+                                                id="number-{{ $number->id }}">
+                                            <label
+                                                class="btn btn-light avatar-sm rounded d-flex justify-content-center align-items-center"
+                                                for="number-{{ $number->id }}">
+                                                {{ $number->number }}
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
                                 <div class="mt-3">
                                     <h5 class="text-dark fw-medium">Colors :</h5>
                                     <div class="d-flex flex-wrap gap-2" role="group"
@@ -210,6 +228,13 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                @if ($errors->has('discount_and_tax'))
+                                <div class="col-12">
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('discount_and_tax') }}
+                                    </div>
+                                </div>
+                            @endif
                             </div>
 
                             <div class="col-lg-4">
@@ -217,17 +242,24 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text fs-20"><i class='bx bxs-discount'></i></span>
                                     <input wire:model="discount" type="number" id="product-discount"
-                                        class="form-control" placeholder="000">
+                                        class="form-control" placeholder="0.00">
+                                        @error('discount')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <label for="product-tex" class="form-label">Tex</label>
+                                <label for="product-tax" class="form-label">Tax</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text fs-20"><i class='bx bxs-file-txt'></i></span>
-                                    <input wire:model="tax" type="number" id="product-tex" class="form-control"
-                                        placeholder="000">
+                                    <input wire:model="tax" type="number" id="product-tax" class="form-control"
+                                        placeholder="0.00">
+                                        @error('tax')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
