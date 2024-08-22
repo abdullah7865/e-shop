@@ -118,6 +118,8 @@ class Add extends Component
             return;
         }
 
+        $gender = $this->gender === '' ? null : $this->gender;
+
 
         $imagePaths = [];
         if ($this->image) {
@@ -132,7 +134,7 @@ class Add extends Component
             'category_id' => $this->category_id,
             'brand' => $this->brand,
             'weight' => $this->weight,
-            'gender' => $this->gender,
+            'gender' => $gender,
             'sizes' => json_encode($this->selectedSizes),
             'numbers' => json_encode($this->selectedNumbers),
             'colors' => json_encode($this->selectedColors),
