@@ -46,11 +46,11 @@ class Product extends Model
     }
 
     public function sizes()
-{
-    return $this->belongsToMany(Size::class);
-}
-public function colors()
-{
-    return $this->belongsToMany(Color::class, 'color_name');
-}
+    {
+        return $this->belongsToMany(Size::class);
+    }
+    public function colors()
+    {
+        return $this->belongsToMany(Color::class, 'color_name');
+    }
 }

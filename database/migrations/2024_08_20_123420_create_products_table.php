@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('gender', ['Men', 'Women', 'Other'])->nullable();
             $table->json('sizes')->nullable();
             $table->json('colors')->nullable();
+            $table->json('numbers')->nullable();
             $table->text('description')->nullable();
             $table->string('tag_number')->nullable();
             $table->integer('stock')->nullable();

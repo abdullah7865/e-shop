@@ -121,10 +121,30 @@
                                             </label>
                                         @endforeach
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="mt-3">
+                                    <h5 class="text-dark fw-medium">number :</h5>
+                                    <div class="d-flex flex-wrap gap-2" role="group"
+                                        aria-label="Basic checkbox toggle button group">
+                                        @foreach ($sizes as $size)
+                                            <input type="checkbox" multiple wire:model="selectedSizes"
+                                                value="{{ $size->id }}"
+                                                class="btn-check @error('selectedSizes') is-invalid @enderror"
+                                                id="size-{{ $size->id }}">
+                                            <label
+                                                class="btn btn-light avatar-sm rounded d-flex justify-content-center align-items-center"
+                                                for="size-{{ $size->id }}">
+                                                {{ $size->size_label }}
+                                            </label>
+                                        @endforeach
+                                    </div>
 
                                 </div>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-4">
                                 <div class="mt-3">
                                     <h5 class="text-dark fw-medium">Colors :</h5>
                                     <div class="d-flex flex-wrap gap-2" role="group"

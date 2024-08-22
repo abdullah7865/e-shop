@@ -47,10 +47,13 @@
                             <a class="sub-nav-link" href="{{route ('product.add')}}">Create</a>
                        </li>
                           <li class="sub-nav-item">
-                               <a class="sub-nav-link" href="{{route ('product.size')}}">size</a>
+                               <a class="sub-nav-link" href="{{route ('product.size')}}">Size</a>
                           </li>
                           <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{route ('product.color')}}">color</a>
+                            <a class="sub-nav-link" href="{{route ('product.number')}}">Number</a>
+                       </li>
+                          <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="{{route ('product.color')}}">Color</a>
                        </li>
                      </ul>
                 </div>
