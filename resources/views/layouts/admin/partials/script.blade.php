@@ -12,4 +12,3 @@
   <!-- Dashboard Js -->
   <script src="{{asset('assets/admin/js/pages/dashboard.js')}}"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-  <script src="//unpkg.com/alpinejs" defer></script>
