@@ -4,10 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function(){
-    return view('front.home');
-});
 
+Route::view('/', 'front.home')->name('front.home');
 Route::view('/shop', 'front.shop')->name('shop');
 
 Route::get('/customer/login', function(){

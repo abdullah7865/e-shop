@@ -98,7 +98,7 @@
 
                                             <div
                                                 class="product-card-action product-card-action-2 justify-content-center">
-                                                <a href="#quickview-modal" class="action-card action-quickview" data-bs-toggle="modal" wire:click="selectProduct({{ $product->id }})">
+                                                <a href="#quickview-modal" class="action-card action-quickview" data-bs-toggle="modal">
                                                     <i class="fa-solid fa-magnifying-glass" style="color: #000000;"></i>
                                                 </a>
 
@@ -176,7 +176,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @if ($selectedProduct)
+                    {{-- @if ($selectedProduct) --}}
                         <div class="row">
                             <div class="col-lg-6 col-md-12 col-12">
                                 <div class="product-gallery product-gallery-vertical d-flex">
@@ -396,7 +396,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    {{-- @endif --}}
                 </div>
             </div>
         </div>
