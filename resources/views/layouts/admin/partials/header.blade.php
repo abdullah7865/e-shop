@@ -18,11 +18,11 @@
               <div class="d-flex align-items-center gap-1">
 
                    <!-- Theme Color (Light/Dark) -->
-                   <div class="topbar-item">
+                   {{-- <div class="topbar-item">
                         <button type="button" class="topbar-button" id="light-dark-mode">
                              <iconify-icon icon="solar:moon-bold-duotone" class="fs-24 align-middle"></iconify-icon>
                         </button>
-                   </div>
+                   </div> --}}
 
                    <!-- User -->
                    <div class="dropdown topbar-item">

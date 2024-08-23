@@ -134,36 +134,69 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="pagination justify-content-center mt-100">
+                    {{-- <div class="pagination justify-content-center mt-100">
+                        {{ $products->links() }} <!-- Use Laravel's pagination links method -->
+                    </div> --}}
+                    {{-- <div class="pagination justify-content-center mt-100">
                         <nav>
                             <ul class="pagination m-0 d-flex align-items-center">
-                                <li class="item disabled">
-                                    <a class="link">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-left">
-                                            <polyline points="15 18 9 12 15 6"></polyline>
-                                        </svg>
-                                    </a>
-                                </li>
-                                <li class="item"><a class="link" href="#">1</a></li>
-                                <li class="item active"><a class="link" href="#">2</a></li>
-                                <li class="item"><a class="link" href="#">3</a></li>
-                                <li class="item"><a class="link" href="#">4</a></li>
-                                <li class="item">
-                                    <a class="link" href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-right">
-                                            <polyline points="9 18 15 12 9 6"></polyline>
-                                        </svg>
-                                    </a>
-                                </li>
+                                @if ($products->onFirstPage())
+                                    <li class="item disabled">
+                                        <a class="link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="icon icon-left">
+                                                <polyline points="15 18 9 12 15 6"></polyline>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li class="item">
+                                        <a class="link" href="{{ $products->previousPageUrl() }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="icon icon-left">
+                                                <polyline points="15 18 9 12 15 6"></polyline>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @foreach ($products->links()->elements[0] as $page => $url)
+                                    <li class="item {{ $page == $products->currentPage() ? 'active' : '' }}">
+                                        <a class="link" href="{{ $url }}">{{ $page }}</a>
+                                    </li>
+                                @endforeach
+
+                                @if ($products->hasMorePages())
+                                    <li class="item">
+                                        <a class="link" href="{{ $products->nextPageUrl() }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="icon icon-right">
+                                                <polyline points="9 18 15 12 9 6"></polyline>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li class="item disabled">
+                                        <a class="link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="icon icon-right">
+                                                <polyline points="9 18 15 12 9 6"></polyline>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                         </nav>
-                    </div>
+                    </div> --}}
+
                 </div>
             </div>
         </div>
